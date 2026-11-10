@@ -4,7 +4,7 @@
 
 ## 工程師審查用驗證計畫
 
-使用 [nor_flash_dv_design](skills/nor_flash_dv_design/SKILL.md)，目前版本 `20261110_03`。
+使用 [nor_flash_dv_design](skills/nor_flash_dv_design/SKILL.md)，目前版本 `20261110_04`。
 
 例如：「請依這份 Datasheet，為〈功能名稱〉設計驗證計畫，輸出 HTML。」
 
@@ -17,6 +17,14 @@
 方法來源：[pstack /statechart](https://github.com/cursor/plugins/tree/main/pstack/skills/statechart)。
 
 保留產品狀態審查、具體異常路徑與未涵蓋範圍說明，讓工程師核對 AI 的理解與測試判別能力。這是文件推演與審查計畫，不代表已執行形式驗證或晶片實測。
+
+### 實際應用與 Writer 範圍
+
+依常見操作、常見誤用及重要異常選代表性測項，不窮舉所有組合。指定 Writer／Programmer 時，固定低頻，不做 SPEED 掃描；一般初始化與復原使用 Datasheet 支援的 Software Reset，不預設上下電、/HOLD 或電源控制能力。仍保留必要等待、輪詢、timeout 與 Reset recovery time。
+
+Software Reset 不等同上下電。掉電與上電專屬行為列為本次範圍外；無法 Reset 或復原時停止。只有使用者要求擴充才加入特殊設備測試。
+
+例如：「請依這份 Datasheet 為〈功能〉產出 Writer 使用的 HTML 計畫。固定低頻、使用 Software Reset、不測上下電與 /HOLD；先完成計畫，再交給 writer_program_flow_design 實作。」
 
 ### 文字編輯參考
 
@@ -139,40 +147,7 @@ skill_root="$PWD/.claude/skills" # Claude Code
 複製完成只代表檔案到位，還要在 CLI 確認能讀取此 skill。使用該工具的技能清單或重新開啟工作階段載入；工具版本、停用設定與組織政策可能影響載入。
 
 - GitHub Copilot CLI：在互動介面輸入 `/skills`，確認技能存在且已啟用。
-- Codex CLI：輸入 `/skills` 或鍵入 `# NOR Flash New Feature Design Flow
-
-讓工程師提供 Datasheet 與目標功能，由 AI 自行閱讀規格、設計測試構想，產出可直接開啟的 HTML 驗證計畫書。
-
-## 工程師審查用驗證計畫
-
-使用 [nor_flash_dv_design](skills/nor_flash_dv_design/SKILL.md)，目前版本 `20261110_03`。
-
-例如：「請依這份 Datasheet，為〈功能名稱〉設計驗證計畫，輸出 HTML。」
-
-不必提供章節與頁碼。AI 自行查閱功能、指令、暫存器與時序，將規格缺漏列為待確認。只有缺少文件、功能範圍不明或重要規格衝突時，才詢問必要問題。
-
-輸出依「概念 → 流程 → 判讀」排列：功能規則、測試區域、流程總覽、各 Flow 的完整測項、邊界與未定義用法、復原、判讀方式及待確認問題。單檔 HTML 可離線閱讀與列印；流程使用 HTML／SVG，不依賴 Mermaid。
-
-版面與閱讀順序參考 NOR_Flash_DV_Guide_V6.html，範本已移除案例的產品數值與實測結論。每次計畫依本次 Datasheet 重新設計。驗證計畫不代表已通過實測，也不綁定 Writer 或特定設備。
-
-方法來源：[pstack /statechart](https://github.com/cursor/plugins/tree/main/pstack/skills/statechart)。
-
-保留產品狀態審查、具體異常路徑與未涵蓋範圍說明，讓工程師核對 AI 的理解與測試判別能力。這是文件推演與審查計畫，不代表已執行形式驗證或晶片實測。
-
-### 文字編輯參考
-
-每次計畫均先嘗試讀取並套用 [speak-human-tw](https://github.com/Raymondhou0917/speak-human-tw) 與 [asd-ste100](https://github.com/danyuchn/asd-ste100-skill)。未安裝時從原 repo 讀取；直接取得失敗才用 Web Search 尋找原始文件。永久安裝依使用者授權與平台方式辦理，不阻擋本次計畫。取得失敗須如實揭露。
-
-完整使用時機、下載安裝、搜尋備援與保真編輯規則見 SKILL.md 的「用詞與文字」。繁中借用 STE 的句子結構原則，不宣稱正式標準認證。
-
-### 相關檔案
-
-- [Skill](skills/nor_flash_dv_design/SKILL.md)
-- [測試設計檢查](skills/nor_flash_dv_design/references/test-design-review.md)
-- [HTML 輸出規範](skills/nor_flash_dv_design/references/html-output.md)
-- [HTML 範本](skills/nor_flash_dv_design/assets/verification-plan-template.html)：下載後開啟可看版型；佔位符供 AI 產出計畫時替換。
-
- 選取技能。
+- Codex CLI：輸入 `/skills` 或鍵入 `$` 選取技能。
 - Antigravity CLI：在輸入框鍵入 `/`，查找載入的技能；若未列出，確認目前工作目錄與安裝位置。
 - Claude Code：輸入 `/skills` 查看，或從 `/` 選單選取。
 
@@ -199,6 +174,6 @@ speak-human-tw 與 asd-ste100 不包含在本 repo 內。未安裝時，本 skil
 
 ## 獨立的 Writer 工具
 
-[writer_program_flow_design](skills/writer_program_flow_design/SKILL.md) 保留給明確需要 Writer／Programmer C code 的使用者，版本 `20261110_01`。它是獨立選用工具，不是驗證計畫的必要後續步驟。本次改版不修改其韌體規則；實作前仍需另外確認設備、底層函式與完整操作條件。
+[writer_program_flow_design](skills/writer_program_flow_design/SKILL.md) 保留給明確需要 Writer／Programmer C code 的使用者，版本 `20261110_02`。一般計畫不強制使用；指定 Writer 時先完成 HTML 計畫，再依使用者要求接續本工具實作。沿用低頻與 Software Reset 範圍，不重新加入 SPEED、上下電或 /HOLD 測試。實作前確認必要的底層函式與操作條件。
 
 版本格式沿用 `YYYYMMDD_NN`，記錄在各 SKILL.md front matter。
