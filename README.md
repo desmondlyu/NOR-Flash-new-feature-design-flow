@@ -8,8 +8,8 @@
 
 | Skill | 用途 | 版本路徑 |
 |---|---|---|
-| `nor_flash_dv_design` | 以狀態圖分析功能、規則、反例與測項 | `skills/nor_flash_dv_design/20261110_00/` |
-| `writer_program_flow_design` | 把測試計畫轉成 Writer 流程、C code 與測試 log | `skills/writer_program_flow_design/20261110_00/` |
+| `nor_flash_dv_design` | 以狀態圖分析功能、規則、反例與測項 | `skills/nor_flash_dv_design/SKILL.md` |
+| `writer_program_flow_design` | 把測試計畫轉成 Writer 流程、C code 與測試 log | `skills/writer_program_flow_design/SKILL.md` |
 
 ## 建議使用順序
 
@@ -26,14 +26,12 @@
 ```text
 skills/
 ├── nor_flash_dv_design/
-│   └── 20261110_00/
-│       └── SKILL.md
+│   └── SKILL.md
 └── writer_program_flow_design/
-    └── 20261110_00/
-        ├── SKILL.md
-        └── references/
-            ├── firmware_checklist.md
-            └── log_format.md
+    ├── SKILL.md
+    └── references/
+        ├── firmware_checklist.md
+        └── log_format.md
 ```
 
 ## 使用限制
@@ -44,7 +42,7 @@ skills/
 - `writer_program_flow_design` 不會自行發明底層 SPI 函式。
 - C code、測試計畫與實測 log 的步驟編號、指令、預期值與判定代碼必須保持一致。
 
-## 版本命名
+## 版本資訊
 
-版本格式為 `YYYYMMDD_NN`。本次版本 `20261110_00` 代表 2026 年 11 月 10 日的第一個版本。
+版本格式為 `YYYYMMDD_NN`。目前版本 `20261110_00` 寫在兩份 `SKILL.md` 的 front matter。
 

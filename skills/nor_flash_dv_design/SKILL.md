@@ -1,5 +1,6 @@
 ---
 name: nor_flash_dv_design
+version: 20261110_00
 description: "NOR Flash DV 驗證流程設計與審查。用 statechart 方法把新設計、新功能、規格變更或異常行為畫成狀態圖，沿圖找反例與測項缺口，依正驗、反驗、邊界、Datasheet 未定義用法四類產生測試流程，再與現有流程比較、合併。Use when 使用者要設計或審查任一 NOR Flash 功能的 DV 測項，問「哪些測項設計壞了也會過」，或要合併、精簡現有測試流程。"
 ---
 

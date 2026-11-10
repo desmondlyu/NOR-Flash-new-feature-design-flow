@@ -1,5 +1,6 @@
 ---
 name: writer_program_flow_design
+version: 20261110_00
 description: 把 /nor_flash_dv_design 產出的測試計畫書（.html 或 .md 的測項表）轉成 Writer／Programmer 韌體 C code（例如 LEAPER-56 的 LP_ICIDCheck.c）的自動測試流程。範圍包含流程骨架、指令序列、判定引擎、停止規則、測試前說明與測試中 printf log 文字、結尾總表、編譯與實測回填。只要使用者提到「把測試流程寫成 C code」「Writer 測試程式」「Auto Test 選單」「printf log 看不懂」「log 格式」「測試總表」「實測 log FAIL 要查」「計畫書轉程式」，或在 /nor_flash_dv_design 之後要實作，就用這個 skill，即使使用者沒有說出 skill 名稱。
 ---
 
