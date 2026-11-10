@@ -4,7 +4,7 @@
 
 ## 工程師審查用驗證計畫
 
-使用 [nor_flash_dv_design](skills/nor_flash_dv_design/SKILL.md)，目前版本 `20261110_02`。
+使用 [nor_flash_dv_design](skills/nor_flash_dv_design/SKILL.md)，目前版本 `20261110_03`。
 
 例如：「請依這份 Datasheet，為〈功能名稱〉設計驗證計畫，輸出 HTML。」
 
@@ -17,6 +17,12 @@
 方法來源：[pstack /statechart](https://github.com/cursor/plugins/tree/main/pstack/skills/statechart)。
 
 保留產品狀態審查、具體異常路徑與未涵蓋範圍說明，讓工程師核對 AI 的理解與測試判別能力。這是文件推演與審查計畫，不代表已執行形式驗證或晶片實測。
+
+### 文字編輯參考
+
+每次計畫均先嘗試讀取並套用 [speak-human-tw](https://github.com/Raymondhou0917/speak-human-tw) 與 [asd-ste100](https://github.com/danyuchn/asd-ste100-skill)。未安裝時從原 repo 讀取；直接取得失敗才用 Web Search 尋找原始文件。永久安裝依使用者授權與平台方式辦理，不阻擋本次計畫。取得失敗須如實揭露。
+
+完整使用時機、下載安裝、搜尋備援與保真編輯規則見 SKILL.md 的「用詞與文字」。繁中借用 STE 的句子結構原則，不宣稱正式標準認證。
 
 ### 相關檔案
 
