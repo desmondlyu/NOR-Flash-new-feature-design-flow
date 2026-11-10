@@ -1,6 +1,6 @@
 ---
 name: writer_program_flow_design
-version: 20261110_01
+version: 20261110_02
 description: 把 /nor_flash_dv_design 產出的測試計畫書（.html 或 .md 的測項表）轉成 Writer／Programmer 韌體 C code（例如 LEAPER-56 的 LP_ICIDCheck.c）的自動測試流程。範圍包含流程骨架、指令序列、判定引擎、停止規則、測試前說明與測試中 printf log 文字、結尾總表、編譯與實測回填。只要使用者提到「把測試流程寫成 C code」「Writer 測試程式」「Auto Test 選單」「printf log 看不懂」「log 格式」「測試總表」「實測 log FAIL 要查」「計畫書轉程式」，或在 /nor_flash_dv_design 之後要實作，就用這個 skill，即使使用者沒有說出 skill 名稱。
 ---
 
@@ -15,6 +15,14 @@ description: 把 /nor_flash_dv_design 產出的測試計畫書（.html 或 .md �
 | 回填 | 本 skill 第 8 步，再回到 `/nor_flash_dv_design` 第 5 步 | 實測判讀、計畫書與 C code 同步 |
 
 計畫書是依據來源。C code 跟隨計畫書。兩者不一致時，先停下來，問使用者以哪一份為準。
+
+## 沿用計畫的 Writer 測試範圍
+
+以計畫書選定的代表性應用流程實作，不自行展開所有組合。固定沿用符合指令規格的低頻設定，不掃頻或驗證 SPEED；保留完成等待、狀態輪詢、timeout 與 Reset recovery time。一般初始化／復原採 Datasheet 支援的 Software Reset，不預設 Power OFF/ON、/HOLD、硬體 Reset 腳位或特殊電源控制，也不要求使用者先提供這些能力。
+
+Software Reset 不能替代真正的上下電驗證。無法執行 Reset 或復原時停止，不自行加入電源操作。需上下電才能驗證的功能記錄為範圍外或未涵蓋；不以 Reset 結果宣稱通過。只有使用者明確擴充範圍才增加特殊控制。
+
+接收 HTML 的條件、步驟與判讀方式即可，不要求計畫預先具備固定 R*/F*/U* 編號或程式判定代碼。所需程式對應由本 skill 建立，保留原測項意義與範圍。
 
 ## 寫作規則（兩種讀者，兩套規則）
 
@@ -37,7 +45,7 @@ description: 把 /nor_flash_dv_design 產出的測試計畫書（.html 或 .md �
 - 計畫書路徑（`/nor_flash_dv_design` 產出）與版本。
 - 目標 C 檔路徑、選單入口、要新增或改寫的函式範圍。
 - DUT 資訊：JEDEC ID、容量、位址模式（3-byte／4-byte，見 skill `4-Byte-Addressing-Mode`）。
-- 可用的底層函式（SPI 傳送、Read Status、Power OFF/ON、Test Mode 指令）。用 `leaper56-spi-test-sequence-generator` 的對應規則查找，不自己發明底層函式。
+- 可用的底層函式（SPI 傳送、Read Status、延遲／timeout、Software Reset 所需指令傳送）。用 `leaper56-spi-test-sequence-generator` 的對應規則查找，不自己發明底層函式。
 - 刻意保留的規則（固定等待時間、固定 pattern、固定位址）。
 
 完成條件：計畫書每個測項都能對到一段待寫的 C code，或標「NOT RUN（原因）」。
@@ -62,7 +70,7 @@ description: 把 /nor_flash_dv_design 產出的測試計畫書（.html 或 .md �
 | Flow 0 | 前置檢查與測試資料 | 讀 ID、讀殘留保護與非揮發性設定、建立測試資料。失敗判 NOT READY |
 | Flow 1～N | 計畫書的正驗、反驗、邊界 | 依計畫書順序。每個 Flow 開頭檢查前置狀態 |
 | Flow NX | 邊界用法與 Datasheet 未定義用法 | 放在最後。`[Spec]` 判正式 PASS/FAIL，`[No spec]` 不符時判 ASK DESIGN |
-| 最後一個 Flow | 復原 | 一定執行。復原失敗時停止，請工程師處理 |
+| 最後一個 Flow | 復原 | 僅執行目前狀態下規格允許且設備可行的復原；無法復原時停止，請工程師處理 |
 
 1. 步驟編號用數字：`2.4` 表示 Flow 2 第 4 步。子項用字母（`4.5a`～`4.5f`）。Detail 用 `r` 結尾（`1.2r`），不算一步。
 2. 編號依實際執行順序排列。移動步驟時，重新編號，並同步計畫書。
