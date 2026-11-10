@@ -1,55 +1,28 @@
 # NOR Flash New Feature Design Flow
 
-這個 repo 提供兩個相互銜接的 Skill，協助設計 NOR Flash 新功能的 DV 流程，並把測試計畫轉成 Writer／Programmer 的 C code。
+讓工程師提供 Datasheet 與目標功能，由 AI 自行閱讀規格、設計測試構想，產出可直接開啟的 HTML 驗證計畫書。
 
-## 版本
+## 工程師審查用驗證計畫
 
-目前版本：
+使用 [nor_flash_dv_design](skills/nor_flash_dv_design/SKILL.md)，目前版本 `20261110_01`。
 
-- `nor_flash_dv_design`：`20261110_00`
-- `writer_program_flow_design`：`20261110_01`
+例如：「請依這份 Datasheet，為〈功能名稱〉設計驗證計畫，輸出 HTML。」
 
-| Skill | 用途 | Skill 檔案 |
-|---|---|---|
-| `nor_flash_dv_design` | 以狀態圖分析功能、規則、反例與測項 | `skills/nor_flash_dv_design/SKILL.md` |
-| `writer_program_flow_design` | 把測試計畫轉成 Writer 流程、C code 與測試 log | `skills/writer_program_flow_design/SKILL.md` |
+不必提供章節與頁碼。AI 自行查閱功能、指令、暫存器與時序，將規格缺漏列為待確認。只有缺少文件、功能範圍不明或重要規格衝突時，才詢問必要問題。
 
-## 建議使用順序
+輸出依「概念 → 流程 → 判讀」排列：功能規則、測試區域、流程總覽、各 Flow 的完整測項、邊界與未定義用法、復原、判讀方式及待確認問題。單檔 HTML 可離線閱讀與列印；流程使用 HTML／SVG，不依賴 Mermaid。
 
-1. 先使用 `nor_flash_dv_design`。
-2. 依 Datasheet 建立狀態圖、`R*`／`F*`／`U*` 規則與測項表。
-3. 確認狀態圖與規則清單。
-4. 再使用 `writer_program_flow_design`。
-5. 依測項表建立 Writer 流程、判定引擎、log 與復原流程。
-6. 編譯並在 DUT 上實測。
-7. 將實測 log 回填到測試計畫，再同步計畫與程式。
+版面與閱讀順序參考 NOR_Flash_DV_Guide_V6.html，範本已移除案例的產品數值與實測結論。每次計畫依本次 Datasheet 重新設計。驗證計畫不代表已通過實測，也不綁定 Writer 或特定設備。
 
-## 目錄內容
+### 相關檔案
 
-```text
-skills/
-├── nor_flash_dv_design/
-│   └── SKILL.md
-└── writer_program_flow_design/
-    ├── SKILL.md
-    └── references/
-        ├── firmware_checklist.md
-        └── log_format.md
-```
+- [Skill](skills/nor_flash_dv_design/SKILL.md)
+- [測試設計檢查](skills/nor_flash_dv_design/references/test-design-review.md)
+- [HTML 輸出規範](skills/nor_flash_dv_design/references/html-output.md)
+- [HTML 範本](skills/nor_flash_dv_design/assets/verification-plan-template.html)：下載後開啟可看版型；佔位符供 AI 產出計畫時替換。
 
-## 使用限制
+## 獨立的 Writer 工具
 
-- Datasheet 是功能規格的主要來源。
-- 狀態圖是模型，不等同於晶片實作。
-- 未經 DUT 實測的反例只代表模型推演結果。
-- `writer_program_flow_design` 不會自行發明底層 SPI 函式。
-- C code、測試計畫與實測 log 的步驟編號、指令、預期值與判定代碼必須保持一致。
+[writer_program_flow_design](skills/writer_program_flow_design/SKILL.md) 保留給明確需要 Writer／Programmer C code 的使用者，版本 `20261110_01`。它是獨立選用工具，不是驗證計畫的必要後續步驟。本次改版不修改其韌體規則；實作前仍需另外確認設備、底層函式與完整操作條件。
 
-## 版本資訊
-
-版本格式為 `YYYYMMDD_NN`。版本寫在兩份 `SKILL.md` 的 front matter。
-
-## Writer log 輸出限制
-
-`writer_program_flow_design` 不會固定產生 `HOW TO READ THIS LOG` 區塊。Writer 只輸出啟動測試與判定所需的資訊，避免舊編譯器因 C 原始檔過大而失敗。
-
+版本格式沿用 `YYYYMMDD_NN`，記錄在各 SKILL.md front matter。
