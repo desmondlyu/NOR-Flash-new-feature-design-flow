@@ -4,9 +4,12 @@
 
 ## 版本
 
-本次版本：`20261110_01`
+目前版本：
 
-| Skill | 用途 | 版本路徑 |
+- `nor_flash_dv_design`：`20261110_00`
+- `writer_program_flow_design`：`20261110_01`
+
+| Skill | 用途 | Skill 檔案 |
 |---|---|---|
 | `nor_flash_dv_design` | 以狀態圖分析功能、規則、反例與測項 | `skills/nor_flash_dv_design/SKILL.md` |
 | `writer_program_flow_design` | 把測試計畫轉成 Writer 流程、C code 與測試 log | `skills/writer_program_flow_design/SKILL.md` |
