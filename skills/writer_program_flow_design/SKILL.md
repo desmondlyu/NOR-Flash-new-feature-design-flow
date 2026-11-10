@@ -1,6 +1,6 @@
 ---
 name: writer_program_flow_design
-version: 20261110_00
+version: 20261110_01
 description: 把 /nor_flash_dv_design 產出的測試計畫書（.html 或 .md 的測項表）轉成 Writer／Programmer 韌體 C code（例如 LEAPER-56 的 LP_ICIDCheck.c）的自動測試流程。範圍包含流程骨架、指令序列、判定引擎、停止規則、測試前說明與測試中 printf log 文字、結尾總表、編譯與實測回填。只要使用者提到「把測試流程寫成 C code」「Writer 測試程式」「Auto Test 選單」「printf log 看不懂」「log 格式」「測試總表」「實測 log FAIL 要查」「計畫書轉程式」，或在 /nor_flash_dv_design 之後要實作，就用這個 skill，即使使用者沒有說出 skill 名稱。
 ---
 
@@ -48,9 +48,10 @@ description: 把 /nor_flash_dv_design 產出的測試計畫書（.html 或 .md �
 
 1. 檔案編碼與換行（例如 CP950＋CRLF）。一律用 Python 以二進位讀寫，不用會改編碼的編輯方式。
 2. printf 限制（例如 at91lib：不支援 `%-`、單次輸出 ≥100 字元會當機）。長文字用專用輸出函式分行。
-3. 編譯指令。先對原檔編譯一次，記下既有 warning，之後只看新增的 warning。
-4. 備份：`backup\<檔名>_backup_YYYYMMDD_HHMM`。
-5. change_log 的編碼與語言（ASCII＋CRLF＋英文，避免亂碼）。
+3. 舊編譯器可能因原始檔過大而失敗。先確認實際檔案大小限制，再控制 C code 大小。
+4. 編譯指令。先對原檔編譯一次，記下既有 warning，之後只看新增的 warning。
+5. 備份：`backup\<檔名>_backup_YYYYMMDD_HHMM`。
+6. change_log 的編碼與語言（ASCII＋CRLF＋英文，避免亂碼）。
 
 ## 2. 流程骨架
 
@@ -102,7 +103,7 @@ description: 把 /nor_flash_dv_design 產出的測試計畫書（.html 或 .md �
 3. 復原 Flow 第一步失敗：直接停止。
 4. INFO 與 ASK DESIGN 是待確認，不算進正式 PASS/FAIL，列在 Follow-up。
 
-實作上用一個 `judge(id, code, note)` 統一計數與輸出，再用 `pf(id, ok, note)` 包裝 PASS/FAIL。不要在各步驟自己 printf 結果。
+實作上用一個 `judge(id, code, note)` 統一計數與輸出，再用 `pf(id, ok, note)` 包裝 PASS/FAIL。不要在各步驟自己 printf 結果。不要重複輸出相同資訊。
 
 ## 5. log 文字
 
@@ -110,9 +111,8 @@ description: 把 /nor_flash_dv_design 產出的測試計畫書（.html 或 .md �
 
 ```
 WRITE PROTECTION AUTO TEST              <- 標題、容量、SPI clock
-HOW TO READ THIS LOG                    <- 編號規則、每行意義、結果代碼
-Instructions / Terms / Test areas       <- Datasheet 名稱 + opcode
-WARNING ...                             <- 會永久改變樣品的步驟
+Instructions / Terms / Test areas       <- 只列必要的 Datasheet 名稱與 opcode
+WARNING ...                             <- 只列會永久改變樣品的步驟
 Start the test? (y/n)
 
 TEST FLOW 1: ...
@@ -133,6 +133,10 @@ TEST SUMMARY / Restore status / Total / FINAL RESULT / Follow-up
 - 主動語態、現在式。不用分號。不用片語動詞。
 - 同一件事只用一個詞（例如固定用 "test data"，不混用 baseline/pattern）。
 - `Expect` 寫 Datasheet 給的結果，不寫程式條件式。
+- 不產生固定的 `HOW TO READ THIS LOG` 區塊。
+- 只輸出判定所需的 `Do`、`Expect`、`Got`、`Result` 與必要的 `Detail`。
+- 不重複列出已在測項或總表出現的資訊。
+- 若編譯器有檔案大小限制，優先縮短固定文字與移除重複說明，不刪除判定所需的位址、數值、opcode 或讀回值。
 - 寫完後用 `asd-ste100/scripts/ste-lint.py` 檢查 legend 與說明句。
 
 ## 6. 結尾總表
@@ -152,6 +156,8 @@ TEST SUMMARY / Restore status / Total / FINAL RESULT / Follow-up
 3. 機械檢查（缺一不可）：
    - 編碼可正確解碼，沒有單獨的 LF。
    - 沒有超過 printf 上限的字串，沒有不支援的格式字元。
+   - 檢查 `.new` 原始檔大小沒有超過目標編譯器限制。
+   - 檢查固定 log 文字沒有重複輸出。
    - 沒有殘留舊編號、舊代碼或舊標籤（用 grep 列出 0 筆）。
    - 每個計畫書測項在 C code 都有 begin 與 judge（列出清單比對）。
    - plan 數 = 實際 begin 數。

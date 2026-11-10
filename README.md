@@ -4,7 +4,7 @@
 
 ## 版本
 
-本次版本：`20261110_00`
+本次版本：`20261110_01`
 
 | Skill | 用途 | 版本路徑 |
 |---|---|---|
@@ -44,5 +44,9 @@ skills/
 
 ## 版本資訊
 
-版本格式為 `YYYYMMDD_NN`。目前版本 `20261110_00` 寫在兩份 `SKILL.md` 的 front matter。
+版本格式為 `YYYYMMDD_NN`。版本寫在兩份 `SKILL.md` 的 front matter。
+
+## Writer log 輸出限制
+
+`writer_program_flow_design` 不會固定產生 `HOW TO READ THIS LOG` 區塊。Writer 只輸出啟動測試與判定所需的資訊，避免舊編譯器因 C 原始檔過大而失敗。
 

@@ -1,38 +1,20 @@
 # Log Format
 
-## 測試前說明（在 y/n 之前印出）
+## 測試前必要資訊（在 y/n 之前印出）
 
 ```
 <TEST NAME> AUTO TEST
 Size = 32Mb (00400000h bytes), SPI clock = 25MHz
 
----------------------- HOW TO READ THIS LOG ----------------------
-Step "2.4" = Test Flow 2, step 4.
-Each step prints these lines:
-  Do     : the instructions that the tester sends
-  Expect : the result that the Datasheet gives
-  Got    : the values that the tester reads
-  Result : the step result
-  Detail : more data for the step. A Detail line is not a step.
-
-Step results:
-  PASS        The device does what the Datasheet says.
-  FAIL        The device does not do what the Datasheet says.
-  NOT READY   The start condition is wrong. This is not a device fault.
-  NOT RUN     The tester did not do this step.
-  RETEST      The test condition did not occur (example: WEL=0). Do it again.
-  INFO        The Datasheet gives no rule. The tester records the value only.
-  ASK DESIGN  The Datasheet gives no rule, and the result is not safe.
-              Design decides.
-FAIL, NOT READY and RETEST make the final result FAIL. INFO and ASK DESIGN do not.
-After a FAIL in Flow 0-5, the next steps do not run. Flow 6 always runs.
-
-Instructions:   <opcode + Datasheet name, one per line>
-Terms:          <each register bit or short name, one line each>
-Test areas:     <address, size, data, use>
+Instructions:   <only required opcode and Datasheet names>
+Terms:          <only required register bits>
+Test areas:     <only required address, size, data, and use>
 WARNING:        <steps that change the device for good>
 Start the test? (y/n):
 ```
+
+Do not print a `HOW TO READ THIS LOG` section. Keep the pre-test text short.
+Print only information that the operator needs to start the test.
 
 ## 步驟
 
@@ -51,6 +33,8 @@ Start the test? (y/n):
 - `Detail : ... -> CODE` 用於診斷或記錄，不計步。
 - 停止時加一行：`Note   : the next steps do not run. The test goes to Flow 6.`
 - 邊界 Flow 每步後加 `State  :`，寫下一個步驟的起始狀態。
+- 不重複輸出測項說明、判定代碼說明與總表欄位說明。
+- 固定文字過長時，先刪除重複說明，再保留 `Do`、`Expect`、`Got`、`Result` 與必要的 `Detail`。
 
 ## 結尾
 
