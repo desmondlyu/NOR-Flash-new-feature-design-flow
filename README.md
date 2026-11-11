@@ -4,7 +4,7 @@
 
 ## 工程師審查用驗證計畫
 
-使用 [nor_flash_dv_design](skills/nor_flash_dv_design/SKILL.md)，目前版本 `20261111_01`。
+使用 [nor_flash_dv_design](skills/nor_flash_dv_design/SKILL.md)，目前版本 `20261111_02`。
 
 例如：「請依這份 Datasheet，為〈功能名稱〉設計驗證計畫，輸出 HTML。」
 
