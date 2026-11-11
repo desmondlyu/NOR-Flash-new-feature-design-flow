@@ -4,13 +4,13 @@
 
 ## 工程師審查用驗證計畫
 
-使用 [nor_flash_dv_design](skills/nor_flash_dv_design/SKILL.md)，目前版本 `20261110_04`。
+使用 [nor_flash_dv_design](skills/nor_flash_dv_design/SKILL.md)，目前版本 `20261111_01`。
 
 例如：「請依這份 Datasheet，為〈功能名稱〉設計驗證計畫，輸出 HTML。」
 
 不必提供章節與頁碼。AI 自行查閱功能、指令、暫存器與時序，將規格缺漏列為待確認。只有缺少文件、功能範圍不明或重要規格衝突時，才詢問必要問題。
 
-輸出依「概念 → 流程 → 判讀」排列：功能規則、測試區域、流程總覽、各 Flow 的完整測項、邊界與未定義用法、復原、判讀方式及待確認問題。單檔 HTML 可離線閱讀與列印；流程使用 HTML／SVG，不依賴 Mermaid。
+輸出依「概念 → 流程 → 判讀」排列：功能規則、測試區域、流程總覽、各 Flow 的已選測項、邊界與未定義用法、復原、判讀方式及待確認問題。單檔 HTML 可離線閱讀與列印；流程使用 HTML／SVG，不依賴 Mermaid。
 
 版面與閱讀順序參考 NOR_Flash_DV_Guide_V6.html，範本已移除案例的產品數值與實測結論。每次計畫依本次 Datasheet 重新設計。驗證計畫不代表已通過實測，也不綁定 Writer 或特定設備。
 
@@ -18,13 +18,17 @@
 
 保留產品狀態審查、具體異常路徑與未涵蓋範圍說明，讓工程師核對 AI 的理解與測試判別能力。這是文件推演與審查計畫，不代表已執行形式驗證或晶片實測。
 
-### 實際應用與 Writer 範圍
+### 測項取捨與 CP 建議
 
-依常見操作、常見誤用及重要異常選代表性測項，不窮舉所有組合。指定 Writer／Programmer 時，固定低頻，不做 SPEED 掃描；一般初始化與復原使用 Datasheet 支援的 Software Reset，不預設上下電、/HOLD 或電源控制能力。仍保留必要等待、輪詢、timeout 與 Reset recovery time。
+先驗證新產品功能與邏輯，再依需求評選 CP 測項。每項交代情境依據、目標錯誤及不可取代性；保留指定探索、合併等效條件，只展開已選測項。CP 候選另列攔截證據，不以成本刪除必要驗證。
 
-Software Reset 不等同上下電。掉電與上電專屬行為列為本次範圍外；無法 Reset 或復原時停止。只有使用者要求擴充才加入特殊設備測試。
+### 機台與 Writer 範圍
 
-例如：「請依這份 Datasheet 為〈功能〉產出 Writer 使用的 HTML 計畫。固定低頻、使用 Software Reset、不測上下電與 /HOLD；先完成計畫，再交給 writer_program_flow_design 實作。」
+預設排除高頻與外部 RESET、/HOLD、/WP pin 控制。Software Reset 優先，保留必要等待、輪詢、timeout 與 Reset recovery time。真實上下電僅列機台允許時的補充建議，確認能力並納入範圍後才展開；Software Reset 結果不能替代上下電驗證。無法復原時停止相依測試。
+
+指定 Writer／Programmer 時沿用合法低頻設定，不掃頻、不做 SPEED 裕量驗證。只有明確要求才接續 Writer 實作，並傳遞已選測項與設備限制；候選不自動變成程式流程。
+
+例如：「請依這份 Datasheet 驗證〈新功能〉，保留我指定的邊界與未定義序列，合併等效情境。另列 CP 候選及攔截依據，不估測試時數。輸出 HTML，不產生程式。」
 
 ### 文字編輯參考
 

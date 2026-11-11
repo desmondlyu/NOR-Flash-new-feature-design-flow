@@ -1,0 +1,16 @@
+{
+  "version": "20261111_01",
+  "html_ids": 9,
+  "anchors": 5,
+  "relative_links": 3,
+  "javascript_syntax": "PASS",
+  "diff_check": "PASS",
+  "writer_unchanged": true,
+  "backup": "Local backup created and hash-verified before synchronization; path omitted from repository record",
+  "sync": {
+    ".agents/skills/nor_flash_dv_design": 4,
+    ".codex/skills/nor_flash_dv_design": 4
+  },
+  "browser_check": "PASS via localhost: single-chapter navigation, anchor click, zero broken anchors, unique IDs; 390px viewport without page overflow; basic print media header hidden and chapter visible. Multi-chapter and JavaScript-disabled scenarios not tested.",
+  "behavior_evaluation": "Not run: no product datasheet or prior plan provided"
+}
