@@ -4,7 +4,7 @@
 
 ## 工程師審查用驗證計畫
 
-使用 [nor_flash_dv_design](skills/nor_flash_dv_design/SKILL.md)，目前版本 `20261111_02`。
+使用 [nor_flash_dv_design](skills/nor_flash_dv_design/SKILL.md)，目前版本 `20261112_01`。
 
 例如：「請依這份 Datasheet，為〈功能名稱〉設計驗證計畫，輸出 HTML。」
 
@@ -30,9 +30,13 @@
 
 例如：「請依這份 Datasheet 驗證〈新功能〉，保留我指定的邊界與未定義序列，合併等效情境。另列 CP 候選及攔截依據，不估測試時數。輸出 HTML，不產生程式。」
 
+### 完整敘述與流程圖
+
+測項直接寫位址、資料與條件。每個 Flow 都有專屬 SVG，圖與表格可雙向跳轉。全部文字先經雙技能實質改寫才轉 HTML，必要參考缺漏時停在草稿。
+
 ### 文字編輯參考
 
-每次計畫均先嘗試讀取並套用 [speak-human-tw](https://github.com/Raymondhou0917/speak-human-tw) 與 [asd-ste100](https://github.com/danyuchn/asd-ste100-skill)。未安裝時從原 repo 讀取；直接取得失敗才用 Web Search 尋找原始文件。永久安裝依使用者授權與平台方式辦理，不阻擋本次計畫。取得失敗須如實揭露。
+每次計畫均先嘗試讀取並套用 [speak-human-tw](https://github.com/Raymondhou0917/speak-human-tw) 與 [asd-ste100](https://github.com/danyuchn/asd-ste100-skill)。未安裝時從原 repo 讀取；直接取得失敗才用 Web Search 尋找原始文件。永久安裝依使用者授權與平台方式辦理。必要技能或參考文件取得失敗時，停止於文字草稿，不輸出正式 HTML。
 
 完整使用時機、下載安裝、搜尋備援與保真編輯規則見 SKILL.md 的「用詞與文字」。繁中借用 STE 的句子結構原則，不宣稱正式標準認證。
 
