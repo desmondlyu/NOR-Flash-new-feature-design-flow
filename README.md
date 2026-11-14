@@ -85,7 +85,7 @@ NOR Flash 的新功能驗證通常不只是「列出幾個 command」。一份�
 這是獨立的下一階段工具。它接收已確認的 HTML／Markdown 計畫，協助建立：
 
 - Auto Test Flow 骨架與步驟編號
-- SPI 指令序列與狀態輪詢
+- SPI 指令序列與狀態polling
 - 統一的 PASS／FAIL／NOT READY／RETEST 判定
 - 工程師看得懂的英文 printf log
 - `TEST SUMMARY`、`FINAL RESULT` 與 `Follow-up`
@@ -122,7 +122,7 @@ NOR Flash 的新功能驗證通常不只是「列出幾個 command」。一份�
 預設範圍包括：
 
 - 合法低頻設定，不掃頻、不做 SPEED 裕量驗證
-- Software Reset、必要等待、輪詢、timeout 與 Reset recovery time
+- Software Reset、必要等待、polling、timeout 與 Reset recovery time
 - 依計畫保留正驗、反驗、邊界與未定義用法
 
 預設排除高頻、外部 RESET、`/HOLD`、`/WP` pin 與真實上下電。若設備確實支援且使用者明確納入，才擴充這些範圍。
@@ -309,3 +309,9 @@ skill_root="$HOME/.claude/skills"        # Claude Code
 ## 授權
 
 [MIT License](LICENSE)
+
+## 固定範圍與閱讀規則（2026-11-14）
+
+非 whole chip array 預設採開頭第一個完整 4KB Sector、最後一個完整 64KB Block，不預設中間區，也不強制兩端同為 4KB。以主 skill「固定測試位址基準區」為準，確認容量、指令、各自等待時間、完整比對、相鄰的 Sector／Block 與保護前提。先列 address／pattern 配置，再進入流程。前言直接說驗證目的，詳細原理與來源可展開閱讀。關鍵前提、判定、觸發與停止條件不可收起或省略。每個 Flow 一句目的，操作拆短，保留設計理由供查閱。
+
+全文採台灣工程用語，使用 polling，不自行翻成其他說法。neighboring 依粒度寫「相鄰的 Sector」「相鄰的 Block」或「相鄰的 array」。正文、口述、SVG 與輔助閱讀文字均須檢查。使用者要求標示修改時採黃底，並同步更新所有圖表與復原範圍。
